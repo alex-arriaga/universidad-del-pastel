@@ -4,11 +4,6 @@
 
 .gitignore
 
-# -- Carpetas especificas de CakePHP -----------------------------------------
-tmp/*
-app/tmp/*
-
-
 # -- Editores -----------------------------------------
 # vim
 .*.sw[a-z]

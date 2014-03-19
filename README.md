@@ -9,6 +9,14 @@ Cómo instalar este proyecto en tu servidor local
 
 * Descarga o clona este repositorio
 * Importa la base de datos contenida en el archivo base-de-datos.sql
+* Verifica tus datos de conexión a la base de datos en el archivo YOUR_SERVER_PATH/app/Config/database.php, por defecto está:
+	- 'datasource' => 'Database/Mysql'
+	- 'persistent' => false
+	- 'host' => 'localhost'
+	- 'login' => 'root'
+	- 'password' => ''
+	- 'database' => 'university'
+	- 'prefix' => ''
 * Asegúrate que tienes los tres archivos siguientes:
 	- YOUR_SERVER_PATH/.htaccess
 	- YOUR_SERVER_PATH/app/.htaccess
