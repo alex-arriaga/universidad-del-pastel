@@ -35,6 +35,12 @@ class CoursesController extends AppController {
         $this->render();
    }
     
+    function getAllCourses() {
+		$this->set('courses', $this->Course->find('all'));
+		$this->view = 'auto_completado';
+		$this->layout = 'ajax';
+	}
+
 	function autoCompletado() {
 		$this->set('courses', $this->Course->find('all', array(
 				'conditions' => array(
@@ -83,6 +89,24 @@ class CoursesController extends AppController {
 		$teachers = $this->Course->Teacher->find('list');
 		$students = $this->Course->Student->find('list');
 		$this->set(compact('teachers', 'students'));
+	}
+
+	public function addByAjax() {
+		$status = new stdClass();
+		$status->code = 0;
+		$status->message = "";
+
+		if ($this->request->is('post')) {
+			$this->Course->create();
+			// Todos los datos vienen en el request
+			$data = $this->request->data;
+			if ($this->Course->save($data)) {
+				$status->code = 1;
+				$status->message = "El curso " . $data['Course']['name'] . " se ha insertado con éxito.";
+			}
+		}
+		$this->set(compact('status'));
+		$this->layout = 'ajax';
 	}
 
 	public function edit($id = null) {

@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.7deb5build0.10.10.1
+-- version 4.0.4.1
 -- http://www.phpmyadmin.net
 --
--- Servidor: localhost
--- Tiempo de generación: 24-09-2012 a las 16:29:27
--- Versión del servidor: 5.1.49
--- Versión de PHP: 5.3.3-1ubuntu9.10
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 23-03-2014 a las 06:46:42
+-- Versión del servidor: 5.5.32
+-- Versión de PHP: 5.4.19
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -18,7 +19,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Base de datos: `university`
 --
-CREATE DATABASE `university` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+CREATE DATABASE IF NOT EXISTS `university` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `university`;
 
 -- --------------------------------------------------------
@@ -26,7 +27,11 @@ USE `university`;
 --
 -- Estructura de tabla para la tabla `courses`
 --
+-- Creación: 23-03-2014 a las 05:45:52
+-- Última actualización: 23-03-2014 a las 05:45:53
+--
 
+DROP TABLE IF EXISTS `courses`;
 CREATE TABLE IF NOT EXISTS `courses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -38,7 +43,12 @@ CREATE TABLE IF NOT EXISTS `courses` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
--- Volcar la base de datos para la tabla `courses`
+-- Truncar tablas antes de insertar `courses`
+--
+
+TRUNCATE TABLE `courses`;
+--
+-- Volcado de datos para la tabla `courses`
 --
 
 INSERT INTO `courses` (`id`, `name`, `description`, `teacher_id`, `modified`, `created`) VALUES
@@ -55,7 +65,11 @@ INSERT INTO `courses` (`id`, `name`, `description`, `teacher_id`, `modified`, `c
 --
 -- Estructura de tabla para la tabla `students`
 --
+-- Creación: 23-03-2014 a las 05:45:52
+-- Última actualización: 23-03-2014 a las 05:45:53
+--
 
+DROP TABLE IF EXISTS `students`;
 CREATE TABLE IF NOT EXISTS `students` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
@@ -66,7 +80,12 @@ CREATE TABLE IF NOT EXISTS `students` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
--- Volcar la base de datos para la tabla `students`
+-- Truncar tablas antes de insertar `students`
+--
+
+TRUNCATE TABLE `students`;
+--
+-- Volcado de datos para la tabla `students`
 --
 
 INSERT INTO `students` (`id`, `name`, `last_name`, `modified`, `created`) VALUES
@@ -87,7 +106,11 @@ INSERT INTO `students` (`id`, `name`, `last_name`, `modified`, `created`) VALUES
 --
 -- Estructura de tabla para la tabla `students_courses`
 --
+-- Creación: 23-03-2014 a las 05:45:52
+-- Última actualización: 23-03-2014 a las 05:45:53
+--
 
+DROP TABLE IF EXISTS `students_courses`;
 CREATE TABLE IF NOT EXISTS `students_courses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `student_id` int(11) NOT NULL,
@@ -96,7 +119,12 @@ CREATE TABLE IF NOT EXISTS `students_courses` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 --
--- Volcar la base de datos para la tabla `students_courses`
+-- Truncar tablas antes de insertar `students_courses`
+--
+
+TRUNCATE TABLE `students_courses`;
+--
+-- Volcado de datos para la tabla `students_courses`
 --
 
 INSERT INTO `students_courses` (`id`, `student_id`, `course_id`) VALUES
@@ -119,7 +147,11 @@ INSERT INTO `students_courses` (`id`, `student_id`, `course_id`) VALUES
 --
 -- Estructura de tabla para la tabla `teachers`
 --
+-- Creación: 23-03-2014 a las 05:45:52
+-- Última actualización: 23-03-2014 a las 05:45:53
+--
 
+DROP TABLE IF EXISTS `teachers`;
 CREATE TABLE IF NOT EXISTS `teachers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
@@ -131,10 +163,19 @@ CREATE TABLE IF NOT EXISTS `teachers` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
--- Volcar la base de datos para la tabla `teachers`
+-- Truncar tablas antes de insertar `teachers`
+--
+
+TRUNCATE TABLE `teachers`;
+--
+-- Volcado de datos para la tabla `teachers`
 --
 
 INSERT INTO `teachers` (`id`, `name`, `last_name`, `cv`, `modified`, `created`) VALUES
 (1, 'Alex', 'Arriaga', 'Soy una persona apasionada por la investigaciÃ³n. Mis intereses: IA, Vida Artificial, Sistemas Complejos, AutÃ³matas Celulares, GrÃ¡ficos 3D, DesarrolloWeb, BD, BI, Frameworks y un poco de dibujo y pintura :)', '2012-09-18 17:24:49', '2012-09-13 13:26:40'),
 (2, 'Manuel', 'MartÃ­n', 'Ãreas de Actividad Docente\r\nLicenciatura en Ciencias de la ComputaciÃ³n\r\nIngenierÃ­a en Ciencias de la ComputaciÃ³n\r\nMaestrÃ­a en Ciencias de la ComputaciÃ³n\r\nDiplomados de la F.C.C.\r\nAreas de InterÃ©s:\r\nProcesamiento Digital de ImÃ¡genes\r\nGraficado por Computadora\r\nAplicaciones de la ComputaciÃ³n en las Ciencias MÃ©dicas\r\nProcesamiento Paralelo y Distribuido\r\nSistemas Especializados para Ciencias Naturales y Exactas\r\nCargos Administrativos Actuales\r\nCorresponsable del Area de Servicios de Red de la F.C.C.\r\nCorresponsable de la Biblioteca Especializada "Alejandro Reyes Cristiani" de la F.C.C.\r\nResponsable de la "Olimpiada Mexicana de InformÃ¡tica" a Nivel Estatal (Puebla)\r\nResponsable del Cuerpo AcadÃ©mico de "Sistemas Distribuidos" - F.C.C.\r\nMiembro de la ComisiÃ³n de Tesis de la F.C.C.\r\nResumen Curricular\r\nMiembro de la American Computer Machinery (ACM)\r\nExperiencia como profesor desde 1978 en la enseÃ±anza superior\r\nDiversas conferencias cientÃ­ficas impartidas a nivel nacional e internacional\r\nDiversas conferencias de divulgaciÃ³n impartidas a nivel local\r\n37 publicaciones Nacionales y Locales\r\n15 publicaciones internacionales arbitradas', '2012-09-18 16:45:25', '2012-09-13 13:27:18'),
 (3, 'Adriana', 'L. Cumplido', '', '2012-09-24 16:27:55', '2012-09-13 13:38:06');
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

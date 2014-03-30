@@ -2,7 +2,9 @@
 App::uses('AppController', 'Controller');
 
 class TeachersController extends AppController {
-	
+	public $components = array('RequestHandler');
+	public $helpers = array('Js' => array('Jquery'));
+
 	public $paginate = array(
         'limit' => 5,
         'order' => array(
@@ -36,7 +38,23 @@ class TeachersController extends AppController {
         }
         $this->layout = 'pdf';
         $this->render();
-   }
+   	}
+
+	function autoCompletado() {
+		$this->set('teachers', $this->Teacher->find('all', array(
+				'conditions' => array(
+					'Teacher.name LIKE '=> '%'.$this->request->query['term'].'%'
+				),
+				'fields' => array('id','name')
+				)));
+		$this->layout = 'ajax';
+	}
+
+	function getAllTeachers() {
+		$this->set('teachers', $this->Teacher->find('all'));
+		$this->view = 'auto_completado';
+		$this->layout = 'ajax';
+	}
 
 	public function view($id = null) {
 		$this->Teacher->id = $id;
