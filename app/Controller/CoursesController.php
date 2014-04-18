@@ -13,7 +13,7 @@ class CoursesController extends AppController {
 		);
 
 	public $layout = 'university';
-	
+
 	function viewPdf($id = null){
         if (!$id){
             $this->Session->setFlash('Id inválido para obtener pdf');
@@ -23,7 +23,7 @@ class CoursesController extends AppController {
         Configure::write('debug',0); // Otherwise we cannot use this method while developing
 
         $id = intval($id);
-		  
+
         $property = $this->Course->read(null, $id);//$this->__view($id); // here the data is pulled from the database and set for the view
 		  $this->set('property',$property);
         if (empty($property))
@@ -34,10 +34,13 @@ class CoursesController extends AppController {
         $this->layout = 'pdf'; //this will use the pdf.ctp layout
         $this->render();
    }
-    
+
     function getAllCourses() {
-		$this->set('courses', $this->Course->find('all'));
-		$this->view = 'auto_completado';
+    	$this->RequestHandler->respondAs('json');
+    	$courses =  $this->Course->find('all', array('order' => array('Course.created'=>'desc')));
+		$this->set('courses', $courses);
+
+		$this->view = 'get_all_courses';
 		$this->layout = 'ajax';
 	}
 
@@ -50,7 +53,7 @@ class CoursesController extends AppController {
 				)));
 		$this->layout = 'ajax';
 	}
-	
+
 	function getData($id = null) {
 		$this->Course->id = $id;
 		if(!$this->Course->exists()):
@@ -59,7 +62,7 @@ class CoursesController extends AppController {
 		$this->set('course', $this->Course->read(null, $id));
 		$this->layout = 'ajax';
 	}
-	
+
 	public function index() {
 		$this->Course->recursive = 0;
 		$courses = $this->paginate();
@@ -67,13 +70,13 @@ class CoursesController extends AppController {
             return $courses;
       } else { $this->set('courses', $courses);}
 	}
-	
+
 	public function view($id = null) {
 		$this->Course->id = $id;
 		if (!$this->Course->exists()) {
 			throw new NotFoundException(__('Curso no válido'));
 		}
-		$this->set('course', $this->Course->read(null, $id));		
+		$this->set('course', $this->Course->read(null, $id));
 	}
 
 	public function add() {
@@ -94,7 +97,7 @@ class CoursesController extends AppController {
 	public function addByAjax() {
 		$status = new stdClass();
 		$status->code = 0;
-		$status->message = "";
+		$status->message = "Error";
 
 		if ($this->request->is('post')) {
 			$this->Course->create();
@@ -105,6 +108,7 @@ class CoursesController extends AppController {
 				$status->message = "El curso " . $data['Course']['name'] . " se ha insertado con éxito.";
 			}
 		}
+		$this->RequestHandler->respondAs('json');
 		$this->set(compact('status'));
 		$this->layout = 'ajax';
 	}

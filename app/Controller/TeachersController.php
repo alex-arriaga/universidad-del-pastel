@@ -11,14 +11,14 @@ class TeachersController extends AppController {
             'Teacher.id' => 'asc'
         )
     );
-   
+
    public $layout = 'university';
-      
+
 	public function index() {
 		$this->Teacher->recursive = 0;
 		$this->set('teachers', $this->paginate());
 	}
-	
+
 	function viewPdf($id = null){
         if (!$id){
             $this->Session->setFlash('Id inválido para obtener pdf');
@@ -28,7 +28,7 @@ class TeachersController extends AppController {
         Configure::write('debug',0);
 
         $id = intval($id);
-		  
+
         $property = $this->Teacher->read(null, $id);
 		  $this->set('property',$property);
         if (empty($property))
@@ -51,7 +51,8 @@ class TeachersController extends AppController {
 	}
 
 	function getAllTeachers() {
-		$this->set('teachers', $this->Teacher->find('all'));
+		$this->RequestHandler->respondAs('json');
+		$this->set('teachers', $this->Teacher->find('all', array('order'=>array('Teacher.name' => 'asc'))));
 		$this->view = 'auto_completado';
 		$this->layout = 'ajax';
 	}
