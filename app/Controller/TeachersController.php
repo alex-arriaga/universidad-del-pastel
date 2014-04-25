@@ -80,7 +80,9 @@ class TeachersController extends AppController {
 	public function edit($id = null) {
 		$this->Teacher->id = $id;
 		if (!$this->Teacher->exists()) {
-			throw new NotFoundException(__('Invalid teacher'));
+			//throw new NotFoundException(__('Invalid teacher'));
+			$this->Session->setFlash(__('Profesor no válido.'));
+			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Teacher->save($this->request->data)) {

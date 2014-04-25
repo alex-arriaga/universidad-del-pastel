@@ -116,7 +116,9 @@ class CoursesController extends AppController {
 	public function edit($id = null) {
 		$this->Course->id = $id;
 		if (!$this->Course->exists()) {
-			throw new NotFoundException(__('Invalid course'));
+			//throw new NotFoundException(__('Invalid course'));
+			$this->Session->setFlash(__('Curso no válido.'));
+			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Course->save($this->request->data)) {

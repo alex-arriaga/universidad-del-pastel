@@ -3,16 +3,16 @@ App::uses('AppController', 'Controller');
 
 class StudentsController extends AppController {
 	public $helpers = array('Js' => array('Jquery'));
-	
+
 	public $paginate = array(
         'limit' => 5,
         'order' => array(
             'Student.id' => 'asc'
         )
     );
-	
+
 	public $layout = 'university';
-	
+
 	public function index() {
 		$this->Student->recursive = 0;
 		$this->set('students', $this->paginate());
@@ -27,7 +27,7 @@ class StudentsController extends AppController {
         Configure::write('debug',0);
 
         $id = intval($id);
-		  
+
         $property = $this->Student->read(null, $id);
 		  $this->set('property',$property);
         if (empty($property))
@@ -38,7 +38,7 @@ class StudentsController extends AppController {
         $this->layout = 'pdf';
         $this->render();
    }
-   
+
 	public function view($id = null) {
 		$this->Student->id = $id;
 		if (!$this->Student->exists()) {
@@ -64,7 +64,9 @@ class StudentsController extends AppController {
 	public function edit($id = null) {
 		$this->Student->id = $id;
 		if (!$this->Student->exists()) {
-			throw new NotFoundException(__('Estudiante no válido'));
+			//throw new NotFoundException(__('Estudiante no válido'));
+			$this->Session->setFlash(__('Estudiante no válido.'));
+			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Student->save($this->request->data)) {
